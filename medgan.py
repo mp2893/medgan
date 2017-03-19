@@ -379,7 +379,7 @@ if __name__ == '__main__':
 
     mg.train(dataPath=args.data_file,
              modelPath=args.model_file,
-             outPath=args.out_file
+             outPath=args.out_file,
              pretrainEpochs=args.n_pretrain_epoch,
              nEpochs=args.n_epoch,
              discriminatorTrainPeriod=args.n_discriminator_update,
