@@ -42,7 +42,10 @@ class Medgan(object):
 
     def loadData(self, dataPath=''):
         data = np.load(dataPath)
-        data = np.clip(data, 0, 1)
+
+        if self.dataType == 'binary':
+            data = np.clip(data, 0, 1)
+
         trainX, validX = train_test_split(data, test_size=_VALIDATION_RATIO, random_state=0)
         return trainX, validX
 
