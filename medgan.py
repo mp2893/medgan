@@ -134,7 +134,7 @@ class Medgan(object):
     def getDiscriminatorResults(self, x_input, keepRate, reuse=False):
         batchSize = tf.shape(x_input)[0]
         inputMean = tf.reshape(tf.tile(tf.reduce_mean(x_input,0), [batchSize]), (batchSize, self.inputDim))
-        tempVec = tf.concat(1, [x_input, inputMean])
+        tempVec = tf.concat([x_input, inputMean], 1)
         tempDim = self.inputDim * 2
         with tf.variable_scope('discriminator', reuse=reuse, regularizer=l2_regularizer(self.l2scale)):
             for i, discDim in enumerate(self.discriminatorDims[:-1]):
