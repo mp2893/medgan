@@ -29,7 +29,7 @@ This step describes how to train medGAN, with minimum number of steps using MIMI
 
 1. You can use "process_mimic.py" to process MIMIC-III dataset and generate a suitable training dataset for medGAN. 
 Place the script to the same location where the MIMIC-III CSV files are located, and run the script.
-The execution command is `python process_mimic.py ADMISSIONS.csv DIAGNOSES_ICD.csv PATIENTS.csv <output file> <"binary"|"count">`.
+The execution command is `python process_mimic.py ADMISSIONS.csv DIAGNOSES_ICD.csv <output file> <"binary"|"count">`.
 Note that the last argument decides whether you construct a binary matrix or a count matrix.
 The above command will extract ICD9 diagnosis codes from MIMIC-III. 
 Mind that this script will use only 3 digits of the ICD9 diagnosis code. If you want to use all 5 digits, please see the source code of "process_mimic.py".
