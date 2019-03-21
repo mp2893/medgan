@@ -11,7 +11,7 @@
 # <output file>.types: cPickled Python dictionary that maps string diagnosis codes to integer diagnosis codes.
 
 import sys
-import cPickle as pickle
+import _pickle as pickle
 import numpy as np
 from datetime import datetime
 
@@ -41,7 +41,7 @@ if __name__ == '__main__':
         print('You must choose either binary or count.')
         sys.exit()
 
-    print 'Building pid-admission mapping, admission-date mapping'
+    print('Building pid-admission mapping, admission-date mapping')
     pidAdmMap = {}
     admDateMap = {}
     infd = open(admissionFile, 'r')
@@ -56,7 +56,7 @@ if __name__ == '__main__':
         else: pidAdmMap[pid] = [admId]
     infd.close()
 
-    print 'Building admission-dxList mapping'
+    print('Building admission-dxList mapping')
     admDxMap = {}
     infd = open(diagnosisFile, 'r')
     infd.readline()
@@ -69,18 +69,18 @@ if __name__ == '__main__':
         else: admDxMap[admId] = [dxStr]
     infd.close()
 
-    print 'Building pid-sortedVisits mapping'
+    print('Building pid-sortedVisits mapping')
     pidSeqMap = {}
-    for pid, admIdList in pidAdmMap.iteritems():
+    for pid, admIdList in pidAdmMap.items():
         #if len(admIdList) < 2: continue
         sortedList = sorted([(admDateMap[admId], admDxMap[admId]) for admId in admIdList])
         pidSeqMap[pid] = sortedList
     
-    print 'Building pids, dates, strSeqs'
+    print('Building pids, dates, strSeqs')
     pids = []
     dates = []
     seqs = []
-    for pid, visits in pidSeqMap.iteritems():
+    for pid, visits in pidSeqMap.items():
         pids.append(pid)
         seq = []
         date = []
@@ -90,7 +90,7 @@ if __name__ == '__main__':
         dates.append(date)
         seqs.append(seq)
     
-    print 'Converting strSeqs to intSeqs, and making types'
+    print('Converting strSeqs to intSeqs, and making types')
     types = {}
     newSeqs = []
     for patient in seqs:
@@ -106,7 +106,7 @@ if __name__ == '__main__':
             newPatient.append(newVisit)
         newSeqs.append(newPatient)
 
-    print 'Constructing the matrix'
+    print('Constructing the matrix')
     numPatients = len(newSeqs)
     numCodes = len(types)
     matrix = np.zeros((numPatients, numCodes)).astype('float32')

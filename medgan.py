@@ -204,12 +204,12 @@ class Medgan(object):
         burn_in = 1000
         with tf.Session() as sess:
             saver.restore(sess, modelFile)
-            print 'burning in'
+            print('burning in')
             for i in range(burn_in):
                 randomX = np.random.normal(size=(batchSize, self.randomDim))
                 output = sess.run(x_reconst, feed_dict={x_random:randomX, bn_train:True})
 
-            print 'generating'
+            print('generating')
             nBatches = int(np.ceil(float(nSamples)) / float(batchSize))
             for i in range(nBatches):
                 randomX = np.random.normal(size=(batchSize, self.randomDim))
@@ -265,7 +265,8 @@ class Medgan(object):
 
         optimize_ae = tf.train.AdamOptimizer().minimize(loss_ae + sum(all_regs), var_list=ae_vars)
         optimize_d = tf.train.AdamOptimizer().minimize(loss_d + sum(all_regs), var_list=d_vars)
-        optimize_g = tf.train.AdamOptimizer().minimize(loss_g + sum(all_regs), var_list=g_vars+decodeVariables.values())
+        decodeVariablesValues = list(decodeVariables.values())
+        optimize_g = tf.train.AdamOptimizer().minimize(loss_g + sum(all_regs), var_list=g_vars+decodeVariablesValues)
 
         initOp = tf.global_variables_initializer()
 
@@ -295,7 +296,7 @@ class Medgan(object):
                         validLossVec.append(loss)
                     validReverseLoss = 0.
                     buf = 'Pretrain_Epoch:%d, trainLoss:%f, validLoss:%f, validReverseLoss:%f' % (epoch, np.mean(trainLossVec), np.mean(validLossVec), validReverseLoss)
-                    print buf
+                    print(buf)
                     self.print2file(buf, logFile)
 
             idx = np.arange(trainX.shape[0])
@@ -328,10 +329,10 @@ class Medgan(object):
                     validAccVec.append(validAcc)
                     validAucVec.append(validAuc)
                 buf = 'Epoch:%d, d_loss:%f, g_loss:%f, accuracy:%f, AUC:%f' % (epoch, np.mean(d_loss_vec), np.mean(g_loss_vec), np.mean(validAccVec), np.mean(validAucVec))
-                print buf
+                print(buf)
                 self.print2file(buf, logFile)
                 savePath = saver.save(sess, outPath, global_step=epoch)
-        print  savePath
+        print(savePath)
 
 def str2bool(v):
     if v.lower() in ('yes', 'true', 't', 'y', '1'):
