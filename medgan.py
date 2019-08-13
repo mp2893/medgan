@@ -41,7 +41,7 @@ class Medgan(object):
         self.l2scale = l2scale
 
     def loadData(self, dataPath=''):
-        data = np.load(dataPath)
+        data = np.load(dataPath, allow_pickle=True)
 
         if self.dataType == 'binary':
             data = np.clip(data, 0, 1)
@@ -373,7 +373,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     args = parse_arguments(parser)
 
-    data = np.load(args.data_file)
+    data = np.load(args.data_file, allow_pickle=True)
     inputDim = data.shape[1]
 
     mg = Medgan(dataType=args.data_type,
