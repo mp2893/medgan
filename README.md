@@ -38,5 +38,5 @@ Mind that this script will use only 3 digits of the ICD9 diagnosis code. If you 
 `python medgan.py <matrix file> <output path> --data_type=["binary", "count"]`.
 
 3. After the training, if you want to generate synthetic records, use this command :
-`python medgan.py <matrix file> <generated output path> --model_file=<trained output path> --generate_data=True`.
+`python medgan.py <matrix file> <generated output path> --model_file=<trained output path> --generate_data=True --data_type=["binary", "count"]`.
 Note that `<matrix file>` is not actually used for generating synthetic records, so it is just a dummy input.
